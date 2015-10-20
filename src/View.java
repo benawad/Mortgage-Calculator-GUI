@@ -1,55 +1,42 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import net.miginfocom.swing.MigLayout;
-import java.awt.FlowLayout;
-import javax.swing.JSplitPane;
-import javax.swing.BoxLayout;
-import javax.swing.border.MatteBorder;
 import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
-import javax.swing.SwingConstants;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import java.awt.Component;
-import javax.swing.JComboBox;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class View extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField mortgageAmountField;
 	private JTextField mortgageTermYearsField;
-	private JTextField mortageTermMonthsField;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					View frame = new View();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextField mortgageTermMonthsField;
+	private JTextField interestRateField;
+	private JTextField monthlyPaymentsField;
+	private JTextField add1Field;
+	private JTextField add2Field;
+	private JTextField add3Field;
+	private JTextField paidOffField;
+	private JComboBox monthComboBox;
+	private JComboBox dayComboBox;
+	private JComboBox yearComboBox;
+	private JComboBox extraMonthComboBox;
+	private JComboBox oneTimeMonthComboBox;
+	private JComboBox oneTimeYearComboBox;
 
 	/**
 	 * Create the frame.
@@ -95,13 +82,74 @@ public class View extends JFrame {
 		mortgageTermYearsField = new JTextField();
 		mortgageTermYearsField.setColumns(10);
 		panel_1.add(mortgageTermYearsField);
+		mortgageTermYearsField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateMonths();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateMonths();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateMonths();
+			}
+			
+			public void updateMonths(){
+				try{
+					int years = Integer.parseInt(mortgageTermYearsField.getText());
+					if(years > -1){
+						mortgageTermMonthsField.setText((years*12)+"");
+					} else {
+						new Exception();
+					}
+				} catch (Exception e){
+					mortgageTermMonthsField.setText("");
+				}
+			}
+			
+		});
 		
 		JLabel yearsLabel = new JLabel("years or");
 		panel_1.add(yearsLabel);
 		
-		mortageTermMonthsField = new JTextField();
-		mortageTermMonthsField.setColumns(10);
-		panel_1.add(mortageTermMonthsField);
+		mortgageTermMonthsField = new JTextField();
+		mortgageTermMonthsField.setColumns(10);
+		panel_1.add(mortgageTermMonthsField);
+//		mortgageTermMonthsField.getDocument().addDocumentListener(new DocumentListener() {
+//			
+//			@Override
+//			public void removeUpdate(DocumentEvent e) {
+//				updateYears();
+//			}
+//			
+//			@Override
+//			public void insertUpdate(DocumentEvent e) {
+//				updateYears();
+//			}
+//			
+//			@Override
+//			public void changedUpdate(DocumentEvent e) {
+//				updateYears();
+//			}
+//			
+//			public void updateYears(){
+//				try{
+//					int months = Integer.parseInt(mortgageTermMonthsField.getText());
+//					if(months > -1){
+//						mortgageTermYearsField.setText((months/12)+"");
+//					} else {
+//						new Exception();
+//					}
+//				} catch (Exception e){
+//					mortgageTermYearsField.setText("Error");
+//				}
+//			}
+//		});
 		
 		JLabel monthsLabel = new JLabel("months");
 		panel_1.add(monthsLabel);
@@ -116,9 +164,9 @@ public class View extends JFrame {
 		JLabel interestRateLabel = new JLabel("Interest rate:             ");
 		panel_2.add(interestRateLabel);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		panel_2.add(textField_3);
+		interestRateField = new JTextField();
+		interestRateField.setColumns(10);
+		panel_2.add(interestRateField);
 		
 		JLabel perYearLabel = new JLabel("% per year");
 		panel_2.add(perYearLabel);
@@ -133,14 +181,41 @@ public class View extends JFrame {
 		JLabel startDateLabel = new JLabel("Mortgage start date:");
 		panel_3.add(startDateLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		panel_3.add(comboBox);
+		// get all the names of months in an array
+		// for some reason it adds an empty string to the end of array
+		String[] months = (new DateFormatSymbols()).getShortMonths();
+		// create new array without the blank spot
+		String[] newMonths = new String[months.length-1];
+		System.arraycopy(months, 0, newMonths, 0, months.length-1);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		panel_3.add(comboBox_1);
+		monthComboBox = new JComboBox(newMonths);
+		panel_3.add(monthComboBox);
+
+		dayComboBox = new JComboBox();
+		panel_3.add(dayComboBox);
+
+		// allow user to input +-30 years from current year
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		String[] years = new String[61];
+		int count = 0;
+		for(int i = 30; i >= 0; i--){
+			years[count] = (year-i) + "";
+			count++;
+		}
+		for(int i = 1; i <= 30; i++){
+			years[i+30] = (year+i) + "";
+		}
+
+		yearComboBox = new JComboBox(years);
+		panel_3.add(yearComboBox);
+		// set selected to the current year
+		yearComboBox.setSelectedIndex(30);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		panel_3.add(comboBox_2);
+		// figure out how many days are in the selected month
+		int daysInMonth = calcDays(getMonth(), getYear());
+		setComboBoxDays(daysInMonth);
+
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(240, 243, 250));
@@ -152,10 +227,11 @@ public class View extends JFrame {
 		JLabel monthlyPayLabel = new JLabel("Monthly Payments: $ ");
 		panel_4.add(monthlyPayLabel);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		panel_4.add(textField_4);
+		monthlyPaymentsField = new JTextField();
+		monthlyPaymentsField.setColumns(10);
+		panel_4.add(monthlyPaymentsField);
 		
+
 		JButton calculateButton = new JButton("Calculate");
 		calculateButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		top.add(calculateButton);
@@ -185,9 +261,9 @@ public class View extends JFrame {
 		JLabel add1 = new JLabel("Adding:     $");
 		panel_6.add(add1);
 		
-		textField_5 = new JTextField();
-		panel_6.add(textField_5);
-		textField_5.setColumns(10);
+		add1Field = new JTextField();
+		panel_6.add(add1Field);
+		add1Field.setColumns(10);
 		
 		JLabel descAdd1 = new JLabel("to your monthly mortgage payment");
 		panel_6.add(descAdd1);
@@ -202,15 +278,15 @@ public class View extends JFrame {
 		JLabel add2 = new JLabel("Adding:     $");
 		panel_7.add(add2);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		panel_7.add(textField_6);
+		add2Field = new JTextField();
+		add2Field.setColumns(10);
+		panel_7.add(add2Field);
 		
 		JLabel descAdd2 = new JLabel("as an extra yearly mortgage payment every");
 		panel_7.add(descAdd2);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		panel_7.add(comboBox_3);
+		extraMonthComboBox = new JComboBox();
+		panel_7.add(extraMonthComboBox);
 
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(new Color(240, 243, 250));
@@ -222,18 +298,18 @@ public class View extends JFrame {
 		JLabel add3 = new JLabel("Adding:     $");
 		panel_8.add(add3);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		panel_8.add(textField_7);
+		add3Field = new JTextField();
+		add3Field.setColumns(10);
+		panel_8.add(add3Field);
 		
 		JLabel descAdd3 = new JLabel("as a one-time payment in");
 		panel_8.add(descAdd3);
 		
-		JComboBox comboBox_4 = new JComboBox();
-		panel_8.add(comboBox_4);
+		oneTimeMonthComboBox = new JComboBox();
+		panel_8.add(oneTimeMonthComboBox);
 		
-		JComboBox comboBox_5 = new JComboBox();
-		panel_8.add(comboBox_5);
+		oneTimeYearComboBox = new JComboBox();
+		panel_8.add(oneTimeYearComboBox);
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(new Color(240, 243, 250));
@@ -245,14 +321,62 @@ public class View extends JFrame {
 		JLabel paidOffDateLabel = new JLabel("Changes paid off date to:");
 		panel_9.add(paidOffDateLabel);
 		
-		textField_8 = new JTextField();
-		panel_9.add(textField_8);
-		textField_8.setColumns(10);
+		paidOffField = new JTextField();
+		panel_9.add(paidOffField);
+		paidOffField.setColumns(10);
 		
 		JButton tableButton = new JButton("Show/Recalculate Amortization Table\n");
 		tableButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bottom.add(tableButton);
 
+	}
+	
+	public void addMonthYearComboBoxActionListener(ActionListener listener){
+		monthComboBox.addActionListener(listener);
+		yearComboBox.addActionListener(listener);
+	}
+	
+	public int calcDays(int month, int year){
+		int day = 1;
+		Calendar cal = new GregorianCalendar(year, month, day);
+		return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+	}
+	
+	public void setComboBoxDays(int daysInMonth){
+		if(daysInMonth != dayComboBox.getItemCount()){
+		dayComboBox.removeAllItems();
+			for(int i = 1; i <= daysInMonth; i++){
+				dayComboBox.addItem(i);
+			}
+		}
+	}
+	
+	public int getYear(){
+		return Integer.parseInt((String) yearComboBox.getSelectedItem());
+	}
+	
+	public int getMonth(){
+		return monthComboBox.getSelectedIndex();
+	}
+	
+	public int getMortgageAmount(){
+		return Integer.parseInt(mortgageAmountField.getText());
+	}
+	
+	public double getMortgageTermYears(){
+		return Double.parseDouble(mortgageTermYearsField.getText());
+	}
+	
+	public int getMortgageTermMonths(){
+		return Integer.parseInt(mortgageTermMonthsField.getText());
+	}
+	
+	public int getInterestRate(){
+		return Integer.parseInt(interestRateField.getText());
+	}
+	
+	public double getMonthlyPayments(){
+		return Double.parseDouble(monthlyPaymentsField.getText());
 	}
 
 }
