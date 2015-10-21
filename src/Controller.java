@@ -29,6 +29,18 @@ public class Controller {
 				frame.setMonthlyPayments(mc.getMonthlyPayment());
 			}
 		});
+		
+		frame.addRecalculateTable(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int principle = frame.getMortgageAmount();
+				int loanTerm = frame.getMortgageTermYears();
+				double interestRate = frame.getInterestRate();
+				MortgageCalculator mc = new MortgageCalculator(principle, loanTerm, interestRate);
+				AmortizationTable at = new AmortizationTable(mc.getColumns(), mc.getAmortizationData(0, 0, 0, 0, 0, 0));
+				at.setVisible(true);
+			}
+		});
 	}
 	
 	

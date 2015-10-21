@@ -39,6 +39,8 @@ public class View extends JFrame {
 	private JComboBox oneTimeYearComboBox;
 	private JButton calculateButton;
 	private JButton tableButton;
+	private String[] sMonths;
+	private String[] years;
 
 	/**
 	 * Create the frame.
@@ -187,10 +189,10 @@ public class View extends JFrame {
 		// for some reason it adds an empty string to the end of array
 		String[] months = (new DateFormatSymbols()).getShortMonths();
 		// create new array without the blank spot
-		String[] newMonths = new String[months.length-1];
-		System.arraycopy(months, 0, newMonths, 0, months.length-1);
+		sMonths = new String[months.length-1];
+		System.arraycopy(months, 0, sMonths, 0, months.length-1);
 		
-		monthComboBox = new JComboBox(newMonths);
+		monthComboBox = new JComboBox(sMonths);
 		panel_3.add(monthComboBox);
 
 		dayComboBox = new JComboBox();
@@ -199,7 +201,7 @@ public class View extends JFrame {
 		// allow user to input +-30 years from current year
 		Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
-		String[] years = new String[61];
+		years = new String[61];
 		int count = 0;
 		for(int i = 30; i >= 0; i--){
 			years[count] = (year-i) + "";
@@ -289,7 +291,7 @@ public class View extends JFrame {
 		JLabel descAdd2 = new JLabel("as an extra yearly mortgage payment every");
 		panel_7.add(descAdd2);
 		
-		extraMonthComboBox = new JComboBox();
+		extraMonthComboBox = new JComboBox(sMonths);
 		panel_7.add(extraMonthComboBox);
 
 		JPanel panel_8 = new JPanel();
@@ -310,10 +312,11 @@ public class View extends JFrame {
 		JLabel descAdd3 = new JLabel("as a one-time payment in");
 		panel_8.add(descAdd3);
 		
-		oneTimeMonthComboBox = new JComboBox();
+		oneTimeMonthComboBox = new JComboBox(sMonths);
 		panel_8.add(oneTimeMonthComboBox);
 		
-		oneTimeYearComboBox = new JComboBox();
+		oneTimeYearComboBox = new JComboBox(years);
+		oneTimeYearComboBox.setSelectedIndex(30);
 		panel_8.add(oneTimeYearComboBox);
 		
 		JPanel panel_9 = new JPanel();
@@ -343,6 +346,10 @@ public class View extends JFrame {
 	
 	public void addCalculateActionListener(ActionListener listener){
 		calculateButton.addActionListener(listener);
+	}
+	
+	public void addRecalculateTable(ActionListener listener){
+		tableButton.addActionListener(listener);
 	}
 	
 	public int calcDays(int month, int year){
