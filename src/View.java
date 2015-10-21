@@ -37,6 +37,8 @@ public class View extends JFrame {
 	private JComboBox extraMonthComboBox;
 	private JComboBox oneTimeMonthComboBox;
 	private JComboBox oneTimeYearComboBox;
+	private JButton calculateButton;
+	private JButton tableButton;
 
 	/**
 	 * Create the frame.
@@ -232,7 +234,7 @@ public class View extends JFrame {
 		panel_4.add(monthlyPaymentsField);
 		
 
-		JButton calculateButton = new JButton("Calculate");
+		calculateButton = new JButton("Calculate");
 		calculateButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		top.add(calculateButton);
 		
@@ -262,6 +264,7 @@ public class View extends JFrame {
 		panel_6.add(add1);
 		
 		add1Field = new JTextField();
+		add1Field.setText("0");
 		panel_6.add(add1Field);
 		add1Field.setColumns(10);
 		
@@ -279,6 +282,7 @@ public class View extends JFrame {
 		panel_7.add(add2);
 		
 		add2Field = new JTextField();
+		add2Field.setText("0");
 		add2Field.setColumns(10);
 		panel_7.add(add2Field);
 		
@@ -299,6 +303,7 @@ public class View extends JFrame {
 		panel_8.add(add3);
 		
 		add3Field = new JTextField();
+		add3Field.setText("0");
 		add3Field.setColumns(10);
 		panel_8.add(add3Field);
 		
@@ -325,7 +330,7 @@ public class View extends JFrame {
 		panel_9.add(paidOffField);
 		paidOffField.setColumns(10);
 		
-		JButton tableButton = new JButton("Show/Recalculate Amortization Table\n");
+		tableButton = new JButton("Show/Recalculate Amortization Table\n");
 		tableButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bottom.add(tableButton);
 
@@ -334,6 +339,10 @@ public class View extends JFrame {
 	public void addMonthYearComboBoxActionListener(ActionListener listener){
 		monthComboBox.addActionListener(listener);
 		yearComboBox.addActionListener(listener);
+	}
+	
+	public void addCalculateActionListener(ActionListener listener){
+		calculateButton.addActionListener(listener);
 	}
 	
 	public int calcDays(int month, int year){
@@ -359,24 +368,45 @@ public class View extends JFrame {
 		return monthComboBox.getSelectedIndex();
 	}
 	
+	public int getDay(){
+		return dayComboBox.getSelectedIndex()+1;
+	}
+	
 	public int getMortgageAmount(){
 		return Integer.parseInt(mortgageAmountField.getText());
 	}
 	
-	public double getMortgageTermYears(){
-		return Double.parseDouble(mortgageTermYearsField.getText());
+	public int getMortgageTermYears(){
+		return Integer.parseInt(mortgageTermYearsField.getText());
 	}
 	
 	public int getMortgageTermMonths(){
 		return Integer.parseInt(mortgageTermMonthsField.getText());
 	}
 	
-	public int getInterestRate(){
-		return Integer.parseInt(interestRateField.getText());
+	public double getInterestRate(){
+		return Double.parseDouble(interestRateField.getText());
 	}
 	
 	public double getMonthlyPayments(){
 		return Double.parseDouble(monthlyPaymentsField.getText());
 	}
+	
+	public void setMonthlyPayments(double amount){
+		// 2 digits
+		double rounded = Math.round(amount*100.0)/100.0;
+		monthlyPaymentsField.setText(rounded+"");
+	}
+	
+	public double getAdd1(){
+		return Double.parseDouble(add1Field.getText());
+	}
 
+	public double getAdd2(){
+		return Double.parseDouble(add2Field.getText());
+	}
+	
+	public double getAdd3(){
+		return Double.parseDouble(add3Field.getText());
+	}
 }

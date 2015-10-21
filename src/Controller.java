@@ -18,12 +18,22 @@ public class Controller {
 				frame.setComboBoxDays(daysInMonth);
 			}
 		});
+		
+		frame.addCalculateActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int principle = frame.getMortgageAmount();
+				int loanTerm = frame.getMortgageTermYears();
+				double interestRate = frame.getInterestRate();
+				MortgageCalculator mc = new MortgageCalculator(principle, loanTerm, interestRate);
+				frame.setMonthlyPayments(mc.getMonthlyPayment());
+			}
+		});
 	}
 	
 	
 	public static void main(String[] args){
 		Controller c = new Controller();
-		
 	}
 	
 }
