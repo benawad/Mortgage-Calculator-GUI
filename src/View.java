@@ -372,7 +372,7 @@ public class View extends JFrame {
 	}
 	
 	public int getMonth(){
-		return monthComboBox.getSelectedIndex();
+		return monthComboBox.getSelectedIndex()+1;
 	}
 	
 	public int getDay(){
@@ -400,9 +400,8 @@ public class View extends JFrame {
 	}
 	
 	public void setMonthlyPayments(double amount){
-		// 2 digits
-		double rounded = Math.round(amount*100.0)/100.0;
-		monthlyPaymentsField.setText(rounded+"");
+		// round double to 2 digits
+		monthlyPaymentsField.setText(String.format("%.2f", amount));
 	}
 	
 	public double getAdd1(){
@@ -416,4 +415,25 @@ public class View extends JFrame {
 	public double getAdd3(){
 		return Double.parseDouble(add3Field.getText());
 	}
+	
+	public int getAdd2Month(){
+		return extraMonthComboBox.getSelectedIndex()+1;
+	}
+	
+	public int getAdd3Month(){
+		return oneTimeMonthComboBox.getSelectedIndex()+1;
+	}
+	
+	public int getAdd3Year(){
+		return Integer.parseInt((String)oneTimeYearComboBox.getSelectedItem());
+	}
+	
+	public void setFinishedDate(String date){
+		paidOffField.setText(date);
+	}
+	
+	public String getStartMonthString(int index){
+		return	(String)monthComboBox.getItemAt(index-1); 
+	}
+	
 }

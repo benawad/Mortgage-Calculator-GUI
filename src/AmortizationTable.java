@@ -2,9 +2,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JFrame;
-import javax.swing.JTable;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import java.awt.FlowLayout;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class AmortizationTable extends JFrame{
 	private JTable table;
@@ -18,7 +19,7 @@ public class AmortizationTable extends JFrame{
 		getContentPane().add(scrollPane);
 		table = new JTable(data, columns);
 		table.setShowGrid(true);
-		table.setGridColor(Color.BLUE);
+		table.setGridColor(Color.BLACK);
 		scrollPane.setViewportView(table);
 	}
 	
