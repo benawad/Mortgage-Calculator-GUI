@@ -16,11 +16,11 @@ public class MortgageCalculator {
 		this.loanRate = loanRate;
 	}
 	
-	public double getMonthlyPayment(){
+	public double getMonthlyPayment(double extra){
 		int termOfLoanMonth = loanTerm * 12;
         double monthlyInterestRates = loanRate / (double)(12 * 100);
 		double monthlyMortgage = principle * (monthlyInterestRates / (1 - Math.pow((1+monthlyInterestRates), -(termOfLoanMonth))));
-		return monthlyMortgage;
+		return monthlyMortgage + extra;
 	}
 	
 	public String[] getColumns(){

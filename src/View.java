@@ -124,36 +124,6 @@ public class View extends JFrame {
 		mortgageTermMonthsField = new JTextField();
 		mortgageTermMonthsField.setColumns(10);
 		panel_1.add(mortgageTermMonthsField);
-//		mortgageTermMonthsField.getDocument().addDocumentListener(new DocumentListener() {
-//			
-//			@Override
-//			public void removeUpdate(DocumentEvent e) {
-//				updateYears();
-//			}
-//			
-//			@Override
-//			public void insertUpdate(DocumentEvent e) {
-//				updateYears();
-//			}
-//			
-//			@Override
-//			public void changedUpdate(DocumentEvent e) {
-//				updateYears();
-//			}
-//			
-//			public void updateYears(){
-//				try{
-//					int months = Integer.parseInt(mortgageTermMonthsField.getText());
-//					if(months > -1){
-//						mortgageTermYearsField.setText((months/12)+"");
-//					} else {
-//						new Exception();
-//					}
-//				} catch (Exception e){
-//					mortgageTermYearsField.setText("Error");
-//				}
-//			}
-//		});
 		
 		JLabel monthsLabel = new JLabel("months");
 		panel_1.add(monthsLabel);
@@ -372,7 +342,7 @@ public class View extends JFrame {
 	}
 	
 	public int getMonth(){
-		return monthComboBox.getSelectedIndex()+1;
+		return monthComboBox.getSelectedIndex();
 	}
 	
 	public int getDay(){
