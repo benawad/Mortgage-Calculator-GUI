@@ -44,7 +44,7 @@ public class View extends JFrame {
 
 	public View() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 500);
+		setBounds(100, 100, 640, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(216,226,253)));
 		contentPane.setBackground(new Color(240, 243, 250));
@@ -54,6 +54,7 @@ public class View extends JFrame {
 		JPanel titlePanel = new JPanel();
 		titlePanel.setBackground(Color.WHITE);
 		FlowLayout flowLayout_9 = (FlowLayout) titlePanel.getLayout();
+		flowLayout_9.setVgap(0);
 		flowLayout_9.setAlignment(FlowLayout.LEFT);
 		contentPane.add(titlePanel);
 		JLabel title = new JLabel("<html><font color='#37639e'><strong>Mortgage Calculator</strong></font></html>");
@@ -70,18 +71,19 @@ public class View extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(240, 243, 250));
 		top.add(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 4));
 		
 		JLabel mortgageAmountLabel = new JLabel("Mortgage amount:  $");
 		panel.add(mortgageAmountLabel);
 		
 		mortgageAmountField = new JTextField();
-		mortgageAmountField.setColumns(10);
+		mortgageAmountField.setColumns(8);
 		panel.add(mortgageAmountField);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
+		flowLayout_1.setVgap(4);
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		top.add(panel_1);
 		
@@ -89,7 +91,7 @@ public class View extends JFrame {
 		panel_1.add(mortgageTermLabel);
 		
 		mortgageTermYearsField = new JTextField();
-		mortgageTermYearsField.setColumns(10);
+		mortgageTermYearsField.setColumns(8);
 		panel_1.add(mortgageTermYearsField);
 		mortgageTermYearsField.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -127,7 +129,7 @@ public class View extends JFrame {
 		panel_1.add(yearsLabel);
 		
 		mortgageTermMonthsField = new JTextField();
-		mortgageTermMonthsField.setColumns(10);
+		mortgageTermMonthsField.setColumns(8);
 		panel_1.add(mortgageTermMonthsField);
 		
 		JLabel monthsLabel = new JLabel("months");
@@ -136,6 +138,7 @@ public class View extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
+		flowLayout_2.setVgap(4);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		top.add(panel_2);
 		
@@ -143,7 +146,7 @@ public class View extends JFrame {
 		panel_2.add(interestRateLabel);
 		
 		interestRateField = new JTextField();
-		interestRateField.setColumns(10);
+		interestRateField.setColumns(8);
 		panel_2.add(interestRateField);
 		
 		JLabel perYearLabel = new JLabel("% per year");
@@ -152,6 +155,7 @@ public class View extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout_3 = (FlowLayout) panel_3.getLayout();
+		flowLayout_3.setVgap(4);
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		top.add(panel_3);
 		
@@ -197,6 +201,7 @@ public class View extends JFrame {
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout_4 = (FlowLayout) panel_4.getLayout();
+		flowLayout_4.setVgap(4);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		top.add(panel_4);
 		
@@ -205,7 +210,7 @@ public class View extends JFrame {
 		panel_4.add(monthlyPayLabel);
 		
 		monthlyPaymentsField = new JTextField();
-		monthlyPaymentsField.setColumns(10);
+		monthlyPaymentsField.setColumns(8);
 		panel_4.add(monthlyPaymentsField);
 		
 
@@ -227,6 +232,7 @@ public class View extends JFrame {
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout = (FlowLayout) panel_5.getLayout();
+		flowLayout.setHgap(10);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		bottom.add(panel_5);
 		
@@ -237,6 +243,8 @@ public class View extends JFrame {
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout_5 = (FlowLayout) panel_6.getLayout();
+		flowLayout_5.setVgap(3);
+		flowLayout_5.setHgap(10);
 		flowLayout_5.setAlignment(FlowLayout.LEFT);
 		bottom.add(panel_6);
 		
@@ -246,7 +254,7 @@ public class View extends JFrame {
 		add1Field = new JTextField();
 		add1Field.setText("0");
 		panel_6.add(add1Field);
-		add1Field.setColumns(10);
+		add1Field.setColumns(8);
 		
 		JLabel descAdd1 = new JLabel("to your monthly mortgage payment");
 		panel_6.add(descAdd1);
@@ -254,6 +262,8 @@ public class View extends JFrame {
 		JPanel panel_7 = new JPanel();
 		panel_7.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout_6 = (FlowLayout) panel_7.getLayout();
+		flowLayout_6.setVgap(3);
+		flowLayout_6.setHgap(10);
 		flowLayout_6.setAlignment(FlowLayout.LEFT);
 		bottom.add(panel_7);
 		
@@ -262,7 +272,7 @@ public class View extends JFrame {
 		
 		add2Field = new JTextField();
 		add2Field.setText("0");
-		add2Field.setColumns(10);
+		add2Field.setColumns(8);
 		panel_7.add(add2Field);
 		
 		JLabel descAdd2 = new JLabel("as an extra yearly mortgage payment every");
@@ -274,6 +284,8 @@ public class View extends JFrame {
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout_7 = (FlowLayout) panel_8.getLayout();
+		flowLayout_7.setVgap(3);
+		flowLayout_7.setHgap(10);
 		flowLayout_7.setAlignOnBaseline(true);
 		flowLayout_7.setAlignment(FlowLayout.LEFT);
 		bottom.add(panel_8);
@@ -283,7 +295,7 @@ public class View extends JFrame {
 		
 		add3Field = new JTextField();
 		add3Field.setText("0");
-		add3Field.setColumns(10);
+		add3Field.setColumns(8);
 		panel_8.add(add3Field);
 		
 		JLabel descAdd3 = new JLabel("as a one-time payment in");
@@ -299,6 +311,7 @@ public class View extends JFrame {
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(new Color(240, 243, 250));
 		FlowLayout flowLayout_8 = (FlowLayout) panel_9.getLayout();
+		flowLayout_8.setHgap(10);
 		flowLayout_8.setAlignment(FlowLayout.LEFT);
 		bottom.add(panel_9);
 		
@@ -308,7 +321,7 @@ public class View extends JFrame {
 		
 		paidOffField = new JTextField();
 		panel_9.add(paidOffField);
-		paidOffField.setColumns(10);
+		paidOffField.setColumns(8);
 		
 		tableButton = new JButton("     Show/Recalculate Amortization Table     \n");
 		tableButton.setForeground(Color.WHITE);
