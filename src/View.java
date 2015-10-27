@@ -7,6 +7,7 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -209,8 +209,14 @@ public class View extends JFrame {
 		panel_4.add(monthlyPaymentsField);
 		
 
-		calculateButton = new JButton("Calculate");
+		calculateButton = new JButton("   Calculate   ");
+		calculateButton.setForeground(Color.WHITE);
+		calculateButton.setBackground(new Color(50,90,175));
 		calculateButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		calculateButton.setBorder(BorderFactory.createCompoundBorder(
+	               BorderFactory.createLineBorder(new Color(50,90,175), 1),
+	               BorderFactory.createLineBorder(Color.WHITE, 1)));
+		calculateButton.setOpaque(true);
 		top.add(calculateButton);
 		
 		JPanel bottom = new JPanel();
@@ -304,7 +310,15 @@ public class View extends JFrame {
 		panel_9.add(paidOffField);
 		paidOffField.setColumns(10);
 		
-		tableButton = new JButton("Show/Recalculate Amortization Table\n");
+		tableButton = new JButton("     Show/Recalculate Amortization Table     \n");
+		tableButton.setForeground(Color.WHITE);
+		tableButton.setBackground(new Color(50,90,175));
+		tableButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		tableButton.setBorder(BorderFactory.createCompoundBorder(
+	               BorderFactory.createLineBorder(new Color(50,90,175), 1),
+	               BorderFactory.createLineBorder(Color.WHITE, 1)));
+		tableButton.setOpaque(true);
+
 		tableButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bottom.add(tableButton);
 
