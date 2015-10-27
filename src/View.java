@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -198,7 +198,8 @@ public class View extends JFrame {
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		top.add(panel_4);
 		
-		JLabel monthlyPayLabel = new JLabel("Monthly Payments: $ ");
+		JLabel monthlyPayLabel = new JLabel("<html><font color='#37639e'><strong>Monthly Payments:</strong></font>   $ </html>");
+		monthlyPayLabel.setFont(new Font("Arial", Font.PLAIN, 13));
 		panel_4.add(monthlyPayLabel);
 		
 		monthlyPaymentsField = new JTextField();
@@ -222,7 +223,8 @@ public class View extends JFrame {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		bottom.add(panel_5);
 		
-		JLabel extraLabel = new JLabel("Extra payments");
+		JLabel extraLabel = new JLabel("<html><font color='#37639e'>Extra payments</font></html>");
+		extraLabel.setFont(new Font("Arial", Font.BOLD, 13));
 		panel_5.add(extraLabel);
 		
 		JPanel panel_6 = new JPanel();
@@ -296,7 +298,8 @@ public class View extends JFrame {
 		flowLayout_8.setAlignment(FlowLayout.LEFT);
 		bottom.add(panel_9);
 		
-		JLabel paidOffDateLabel = new JLabel("Changes paid off date to:");
+		JLabel paidOffDateLabel = new JLabel("<html><font color='#37639e'>Changes paid off date to:</font></html>");
+		paidOffDateLabel.setFont(new Font("Arial", Font.BOLD, 13));
 		panel_9.add(paidOffDateLabel);
 		
 		paidOffField = new JTextField();
