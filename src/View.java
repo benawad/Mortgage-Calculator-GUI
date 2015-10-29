@@ -4,8 +4,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -40,7 +42,8 @@ public class View extends JFrame {
 	private JButton calculateButton;
 	private JButton tableButton;
 	private String[] sMonths;
-	private String[] years;
+	private List<String> years;
+	private int numOfYears = 40;
 
 	public View() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,6 +80,7 @@ public class View extends JFrame {
 		panel.add(mortgageAmountLabel);
 		
 		mortgageAmountField = new JTextField();
+		mortgageAmountField.setText("165000");
 		mortgageAmountField.setColumns(8);
 		panel.add(mortgageAmountField);
 		
@@ -91,6 +95,7 @@ public class View extends JFrame {
 		panel_1.add(mortgageTermLabel);
 		
 		mortgageTermYearsField = new JTextField();
+		mortgageTermYearsField.setText("30");
 		mortgageTermYearsField.setColumns(8);
 		panel_1.add(mortgageTermYearsField);
 		mortgageTermYearsField.getDocument().addDocumentListener(new DocumentListener() {
@@ -129,6 +134,7 @@ public class View extends JFrame {
 		panel_1.add(yearsLabel);
 		
 		mortgageTermMonthsField = new JTextField();
+		mortgageTermMonthsField.setText("360");
 		mortgageTermMonthsField.setColumns(8);
 		panel_1.add(mortgageTermMonthsField);
 		
@@ -146,6 +152,7 @@ public class View extends JFrame {
 		panel_2.add(interestRateLabel);
 		
 		interestRateField = new JTextField();
+		interestRateField.setText("4.50");
 		interestRateField.setColumns(8);
 		panel_2.add(interestRateField);
 		
@@ -169,7 +176,10 @@ public class View extends JFrame {
 		sMonths = new String[months.length-1];
 		System.arraycopy(months, 0, sMonths, 0, months.length-1);
 		
+		Calendar cal = Calendar.getInstance();
 		monthComboBox = new JComboBox(sMonths);
+		// set current month
+		monthComboBox.setSelectedIndex(cal.get(Calendar.MONTH));
 		panel_3.add(monthComboBox);
 
 		dayComboBox = new JComboBox();
@@ -178,25 +188,27 @@ public class View extends JFrame {
 		// allow user to input +-30 years from current year
 		Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
-		years = new String[61];
+		years = new ArrayList<>();
 		int count = 0;
-		for(int i = 30; i >= 0; i--){
-			years[count] = (year-i) + "";
+		for(int i = numOfYears; i >= 0; i--){
+			years.add((year-i) + "");
 			count++;
 		}
-		for(int i = 1; i <= 30; i++){
-			years[i+30] = (year+i) + "";
+		for(int i = 1; i <= numOfYears; i++){
+			years.add((year+i) + "");
 		}
 
-		yearComboBox = new JComboBox(years);
+		yearComboBox = new JComboBox(years.toArray());
 		panel_3.add(yearComboBox);
 		// set selected to the current year
-		yearComboBox.setSelectedIndex(30);
+		yearComboBox.setSelectedIndex(numOfYears);
 		
 		// figure out how many days are in the selected month
 		int daysInMonth = calcDays(getMonth(), getYear());
 		setComboBoxDays(daysInMonth);
-
+		
+		// set current day
+		dayComboBox.setSelectedIndex(cal.get(Calendar.DAY_OF_MONTH)-1);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(240, 243, 250));
@@ -210,6 +222,7 @@ public class View extends JFrame {
 		panel_4.add(monthlyPayLabel);
 		
 		monthlyPaymentsField = new JTextField();
+		monthlyPaymentsField.setText("836.03");
 		monthlyPaymentsField.setColumns(8);
 		panel_4.add(monthlyPaymentsField);
 		
@@ -279,6 +292,7 @@ public class View extends JFrame {
 		panel_7.add(descAdd2);
 		
 		extraMonthComboBox = new JComboBox(sMonths);
+		extraMonthComboBox.setSelectedIndex(cal.get(Calendar.MONTH));
 		panel_7.add(extraMonthComboBox);
 
 		JPanel panel_8 = new JPanel();
@@ -301,11 +315,21 @@ public class View extends JFrame {
 		JLabel descAdd3 = new JLabel("as a one-time payment in");
 		panel_8.add(descAdd3);
 		
+		int year1 = cal.get(Calendar.YEAR);
 		oneTimeMonthComboBox = new JComboBox(sMonths);
+		// next month
+		cal.add(Calendar.MONTH, 1);
+		oneTimeMonthComboBox.setSelectedIndex(cal.get(Calendar.MONTH));
 		panel_8.add(oneTimeMonthComboBox);
 		
-		oneTimeYearComboBox = new JComboBox(years);
-		oneTimeYearComboBox.setSelectedIndex(30);
+		oneTimeYearComboBox = new JComboBox(years.toArray());
+		// check if month increased the year
+		int year2 = cal.get(Calendar.YEAR);
+		if(year1 != year2){
+			oneTimeYearComboBox.setSelectedIndex(numOfYears+1);
+		} else {
+			oneTimeYearComboBox.setSelectedIndex(numOfYears);
+		}
 		panel_8.add(oneTimeYearComboBox);
 		
 		JPanel panel_9 = new JPanel();
@@ -358,11 +382,19 @@ public class View extends JFrame {
 	
 	public void setComboBoxDays(int daysInMonth){
 		if(daysInMonth != dayComboBox.getItemCount()){
-		dayComboBox.removeAllItems();
+			dayComboBox.removeAllItems();
 			for(int i = 1; i <= daysInMonth; i++){
 				dayComboBox.addItem(i);
 			}
 		}
+	}
+	
+	public void updateOneTime(int day, int month, int year){
+		Calendar cal = new GregorianCalendar(year, month, day);
+		cal.add(Calendar.MONTH, 1);
+		oneTimeMonthComboBox.setSelectedIndex(cal.get(Calendar.MONTH));
+		String sYear = "" + cal.get(Calendar.YEAR);
+		oneTimeYearComboBox.setSelectedIndex(years.indexOf(sYear));
 	}
 	
 	public int getYear(){
@@ -415,11 +447,11 @@ public class View extends JFrame {
 	}
 	
 	public int getAdd2Month(){
-		return extraMonthComboBox.getSelectedIndex()+1;
+		return extraMonthComboBox.getSelectedIndex();
 	}
 	
 	public int getAdd3Month(){
-		return oneTimeMonthComboBox.getSelectedIndex()+1;
+		return oneTimeMonthComboBox.getSelectedIndex();
 	}
 	
 	public int getAdd3Year(){
@@ -431,7 +463,7 @@ public class View extends JFrame {
 	}
 	
 	public String getStartMonthString(int index){
-		return	(String)monthComboBox.getItemAt(index-1); 
+		return	(String)monthComboBox.getItemAt(index); 
 	}
 	
 }

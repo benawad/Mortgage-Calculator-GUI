@@ -18,6 +18,8 @@ public class Controller {
 				// update the number of days that are in the new month
 				int daysInMonth = frame.calcDays(frame.getMonth(), frame.getYear());
 				frame.setComboBoxDays(daysInMonth);
+				// update one time month and year
+				frame.updateOneTime(frame.getDay(), frame.getMonth(), frame.getYear());
 			}
 		});
 
@@ -28,10 +30,7 @@ public class Controller {
 				int loanTerm = frame.getMortgageTermYears();
 				double interestRate = frame.getInterestRate();
 				MortgageCalculator mc = new MortgageCalculator(principle, loanTerm, interestRate);
-				frame.setMonthlyPayments(mc.getMonthlyPayment(frame.getAdd1()));
-				mc.getAmortizationData(frame.getAdd1(), frame.getAdd2(), frame.getAdd2Month(), frame.getAdd3(),
-						frame.getAdd3Month(), frame.getAdd3Year(), frame.getMonth() + 1, frame.getYear());
-				frame.setFinishedDate(getStringDate(mc.getFinishedMonth(), frame.getDay(), mc.getFinishedYear()));
+				frame.setMonthlyPayments(mc.getMonthlyPayment());
 			}
 		});
 
@@ -44,35 +43,40 @@ public class Controller {
 				MortgageCalculator mc = new MortgageCalculator(principle, loanTerm, interestRate);
 				AmortizationTable at = new AmortizationTable(mc.getColumns(),
 						mc.getAmortizationData(frame.getAdd1(), frame.getAdd2(), frame.getAdd2Month(), frame.getAdd3(),
-								frame.getAdd3Month(), frame.getAdd3Year(), frame.getMonth() + 1, frame.getYear()));
+								frame.getAdd3Month(), frame.getAdd3Year(), frame.getMonth(), frame.getYear()));
 				at.setVisible(true);
 				// set the date the mortgage is finished
 				frame.setFinishedDate(getStringDate(mc.getFinishedMonth(), frame.getDay(), mc.getFinishedYear()));
+				System.out.println(mc.getFinishedMonth() + "|" + frame.getDay() + "|" + mc.getFinishedYear());
+				frame.setMonthlyPayments(mc.getMonthlyPayment());
 			}
 		});
 	}
 
 	private String getStringDate(int month, int day, int year) {
-		// check for non leap year
-		if (year % 4 == 0) {
-			if (year % 100 == 0) {
-				if (year % 400 == 0) {
-					// leap year
-				} else {
-					// not leap year
-					if (day == 29 && month == 2) {
-						month++;
-						day = 1;
+		// only account for leap year when the month is February
+		if (month == 1) {
+			// check for non leap year
+			if (year % 4 == 0) {
+				if (year % 100 == 0) {
+					if (year % 400 == 0) {
+						// leap year
+					} else {
+						// not leap year
+						if (day == 29) {
+							month++;
+							day = 1;
+						}
 					}
+				} else {
+					// the year is a leap year and no change needs to be made
 				}
 			} else {
-				// the year is a leap year and no change needs to be made
-			}
-		} else {
-			// not leap year
-			if (day == 29 && month == 2) {
-				month++;
-				day = 1;
+				// not leap year
+				if (day == 29) {
+					month++;
+					day = 1;
+				}
 			}
 		}
 
