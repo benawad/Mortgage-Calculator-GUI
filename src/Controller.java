@@ -47,7 +47,6 @@ public class Controller {
 				at.setVisible(true);
 				// set the date the mortgage is finished
 				frame.setFinishedDate(getStringDate(mc.getFinishedMonth(), frame.getDay(), mc.getFinishedYear()));
-				System.out.println(mc.getFinishedMonth() + "|" + frame.getDay() + "|" + mc.getFinishedYear());
 				frame.setMonthlyPayments(mc.getMonthlyPayment());
 			}
 		});
