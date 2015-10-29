@@ -1,5 +1,5 @@
 # Mortgage-Calculator-GUI
 ##How to run
-`$ wget https://raw.githubusercontent.com/benawad/Mortgage-Calculator-GUI/blob/master/MortgageCalculator.jar`
+`$ wget https://github.com/benawad/Mortgage-Calculator-GUI/raw/master/MortgageCalculator.jar`
 
 `$ java -jar MortgageCalculator.jar`
