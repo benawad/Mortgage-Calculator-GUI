@@ -1,7 +1,6 @@
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class MortgageCalculator {
 
@@ -26,7 +25,7 @@ public class MortgageCalculator {
 	}
 
 	public String[] getColumns() {
-		String[] array = { "Payment", "Principle", "Interest", "Balance" };
+		String[] array = { "Date", "Payment", "Principle", "Interest", "Total Interest", "Balance" };
 		return array;
 	}
 
@@ -40,7 +39,7 @@ public class MortgageCalculator {
 		monthlyMortgage += extraMonthly;
 		double totalMortgage = monthlyMortgage * termOfLoanMonth;
 
-		double totalInterest = totalMortgage - principle;
+		double totalInterest = 0;
 		double totalAmountDue = principle;
 		double interestPaid;
 		double principlePaid;
@@ -59,6 +58,7 @@ public class MortgageCalculator {
 			if (interestPaid <= 0) {
 				interestPaid = 0;
 			}
+			totalInterest += interestPaid;
 			principlePaid = monthlyMortgage - interestPaid;
 			// increase principle paid once a year
 			// except for the first month
@@ -78,12 +78,15 @@ public class MortgageCalculator {
 				totalAmountDue = 0;
 			}
 
-			String[] curr = new String[4];
-			curr[0] = (i + 1) + "";
-			curr[1] = String.format("$%.2f", principlePaid);
-			curr[2] = String.format("$%.2f", interestPaid);
+			String[] curr = new String[6];
+			String[] months = (new DateFormatSymbols()).getShortMonths();
+			curr[0] = String.format("%s. %d", months[currentMonth], currentYear);
+			curr[1] = String.format("$%.2f", monthlyMortgage);
+			curr[2] = String.format("$%.2f", principlePaid);
+			curr[3] = String.format("$%.2f", interestPaid);
 			sTotalAmountDue = String.format("$%.2f", totalAmountDue);
-			curr[3] = sTotalAmountDue;
+			curr[4] = String.format("$%.2f", totalInterest);
+			curr[5] = sTotalAmountDue;
 			data.add(curr);
 			i++;
 
